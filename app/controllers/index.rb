@@ -1,25 +1,23 @@
-get '/' do
-  erb :index
+configure do
+  enable :sessions
 end
 
-get '/home' do
-  @user = TwitterUser.find_by(twitter_username: session[:username])
-  @tweets = TwitterUser.fetch_tweets!(@user)
+get '/' do
   erb :index
 end
 
 post '/tweet' do
   halt(401,'Not Authorized') unless admin?
   @user = TwitterUser.find_by(twitter_username: session[:username])
-  TwitterUser.post_tweet!(@user, params[:tweet_msg])
-  @tweets = TwitterUser.fetch_tweets!(@user)
-  erb :show
+  @user.post_tweet!(params[:tweet_msg])
+  # @tweets = @user.fetch_tweets!
+  redirect '/tweet'
 end
 
 get '/tweet' do
   halt(401,'Not Authorized') unless admin?
   @user = TwitterUser.find_by(twitter_username: session[:username])
-  @tweets = TwitterUser.fetch_tweets!(@user)
+  @tweets = @user.fetch_tweets!
   erb :show
 end
  
