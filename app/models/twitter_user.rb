@@ -1,4 +1,5 @@
 class TwitterUser < ActiveRecord::Base
+   has_many :tweets
 
    def fetch_tweets!
       client.user_timeline(self.twitter_username, count: 10)
@@ -9,7 +10,6 @@ class TwitterUser < ActiveRecord::Base
    end
 
    def self.find_or_created_by_username(user_info)
-      # byebug
       if TwitterUser.exists?(twitter_username: user_info.info.nickname)
          user = TwitterUser.find_by(twitter_username: user_info.info.nickname)
          user.update(access_token: user_info.extra.access_token.token, access_token_secret: user_info.extra.access_token.secret)
@@ -17,6 +17,12 @@ class TwitterUser < ActiveRecord::Base
       else
          TwitterUser.create(twitter_username: user_info.info.nickname, access_token: user_info.extra.access_token.token, access_token_secret: user_info.extra.access_token.secret)
       end
+   end
+
+   def tweet!(tweet_msg)
+      # self.tweets.destroy_all
+      tweet = self.tweets.create(tweet_text: tweet_msg)
+      MyWorker.perform_async(tweet.id)
    end
 
    private

@@ -49,6 +49,7 @@ use OmniAuth::Builder do
 end
 
 # Set up queue management
+require 'sidekiq'
+require 'redis'
 
-# require 'sidekiq'
-# require 'redis'
+Dir[APP_ROOT.join('app', 'workers', '*.rb')].each { |file| require file }

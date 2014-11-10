@@ -9,8 +9,8 @@ end
 post '/tweet' do
   halt(401,'Not Authorized') unless admin?
   @user = TwitterUser.find_by(twitter_username: session[:username])
-  @user.post_tweet!(params[:tweet_msg])
-  # @tweets = @user.fetch_tweets!
+  @user.tweet!(params[:tweet_msg])
+  # @user.post_tweet!(params[:tweet_msg])
   redirect '/tweet'
 end
 

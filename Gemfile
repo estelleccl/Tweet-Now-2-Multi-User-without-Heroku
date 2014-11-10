@@ -22,8 +22,8 @@ gem 'awesome_print'
 gem 'byebug'
 gem 'rspec'
 gem 'omniauth-twitter'
-# gem 'sidekiq'
-# gem 'redis'
+gem 'sidekiq'
+gem 'redis'
 
 
 group :test do
