@@ -45,7 +45,7 @@
           },
           error: function(jqXHR, textStatus, errorThrown)
           {
-            $("#wait-msg").hide();
+            $("#status").html('Tweet Failed');
           }
         });
         event.preventDefault(); //STOP default action
@@ -62,7 +62,7 @@
       {
         if (response === 'true')
         {
-          // $('#status').text('Done');
+          // $('#status').html('Done');
         } 
         else 
         {

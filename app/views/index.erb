@@ -17,7 +17,7 @@
 		  <br>
 		  <b> Compose New Tweet to be Post Later </b><br>
 		   <form method="post" action="/tweet_later" id="post_tweet_later">
-		    <table border="0"><tr><td><textarea name="tweet_msg1" rows="4" cols="60" autocorrect="on" autocapitalize="off"></textarea></td></tr><td>Delay Time:&nbsp;<input id="time" type="text" name="time" size="3"></td><br></table><br>
+		    <table border="0"><tr><td><textarea name="tweet_msg1" rows="4" cols="60" autocorrect="on" autocapitalize="off"></textarea></td></tr><td>Delay Time:&nbsp;<input type="number" min="0" step="1" name="time" size="3"></td><br></table><br>
 		    <input class="mybutton1" type="submit" value="Submit">
 		    <br>
 		  </form>
