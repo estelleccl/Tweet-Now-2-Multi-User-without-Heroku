@@ -1,50 +1,6 @@
-<script>
-  $(document).ready(function()
-    {
-      $.ajax({
-          url:'<%= "/tweet" %>',
-          type: "GET",
-          success:function(result)
-          {
-            $("#show_tweet").html(result);
-            $("#wait-msg").hide();
-          },
-          error: function(jqXHR, textStatus, errorThrown) 
-          {
-          	$("#wait-msg").hide();
-          }
-        });
-      $("#post_tweet").submit(function(event)
-        {	
-        	console.log("test")
-        	$("#wait-msg").show();
-			    var postData = $(this).serializeArray();
-			    var formURL = $(this).attr("action");
-			    $.ajax(
-			    {
-			        url : formURL,
-			        type: "POST",
-			        data : postData,
-			        success:function(result)
-			        {
-			        	
-			          $("#show_tweet").html(result);
-			          $("#wait-msg").hide();
-			        },
-			        error: function(jqXHR, textStatus, errorThrown)
-			        {
-			        	$("#wait-msg").hide();
-			        }
-			    });
-			    event.preventDefault(); //STOP default action
-        });
-    });
- </script>
 <div class="container">
   <%= erb :_nav_bar %>
 </div>
-
-
 
 <div class="container">
   <h1> Welcome <%= username %> to Post A Tweet!&nbsp; </h1>
@@ -53,11 +9,20 @@
 	<div class="container1">
 		<br>
 		<body><b> Compose New Tweet </b><br><br>
-		  <form method="post" action="/tweet" id="post_tweet"><input type="hidden" name="post_tweet" value="item?id=8548992">
-		    <table border="0"><tr><td><textarea name="tweet_msg" rows="4" cols="80" autocorrect="on" autocapitalize="off"></textarea></td></tr></table><br>
+		  <form method="post" action="/tweet" id="post_tweet">
+		    <table border="0"><tr><td><textarea name="tweet_msg" rows="4" cols="60" autocorrect="on" autocapitalize="off"></textarea></td></tr></table><br>
 		    <input class="mybutton1" type="submit" value="Submit">
 		    <br>
 		  </form>
+		  <br>
+		  <b> Compose New Tweet to be Post Later </b><br>
+		   <form method="post" action="/tweet_later" id="post_tweet_later">
+		    <table border="0"><tr><td><textarea name="tweet_msg1" rows="4" cols="60" autocorrect="on" autocapitalize="off"></textarea></td></tr><td>Delay Time:&nbsp;<input type="text" name="time" size="3"></td><br></table><br>
+		    <input class="mybutton1" type="submit" value="Submit">
+		    <br>
+		  </form>
+		  <br>
+		  <div id="status"></div>
 		</body>
 	</div>
 
@@ -74,7 +39,6 @@
 		<div id="show_tweet">
 		</div>
 	</div>
-<% else %>	
 <% end %>
 
 

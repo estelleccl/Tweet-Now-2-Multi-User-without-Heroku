@@ -6,7 +6,9 @@ class TwitterUser < ActiveRecord::Base
    end
 
    def post_tweet!(tweet_msg)
-      client.update(tweet_msg)
+      tweet = self.tweets.create(tweet_text: tweet_msg)
+      MyWorker.perform_async(tweet.id)
+      # client.update(tweet_msg)
    end
 
    def self.find_or_created_by_username(user_info)
@@ -19,10 +21,12 @@ class TwitterUser < ActiveRecord::Base
       end
    end
 
-   def tweet!(tweet_msg)
+   def post_tweet_later!(tweet_msg, time)
       # self.tweets.destroy_all
+      puts "Time------------->#{time.to_i.minutes}"
+      puts "tweet------------->#{tweet_msg}"
       tweet = self.tweets.create(tweet_text: tweet_msg)
-      MyWorker.perform_async(tweet.id)
+      MyWorker.perform_at(time.to_i.minutes, tweet.id)
    end
 
    private
@@ -35,5 +39,3 @@ class TwitterUser < ActiveRecord::Base
      end
    end
 end
-
-

@@ -29,9 +29,18 @@ APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
 APP_NAME = APP_ROOT.basename.to_s
 
+# Set up queue management
+require 'sidekiq'
+require 'redis'
+require 'sidekiq/api'
+
+Dir[APP_ROOT.join('app', 'workers', '*.rb')].each { |file| require file }
+
 # Set up the controllers and helpers
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
 Dir[APP_ROOT.join('app', 'helpers', '*.rb')].each { |file| require file }
+
+
 
 # Set up the database and models
 require APP_ROOT.join('config', 'database')
@@ -48,8 +57,3 @@ use OmniAuth::Builder do
   provider :twitter, API_KEYS["development"]["twitter_consumer_key_id"], API_KEYS["development"]["twitter_consumer_secret_key_id"]
 end
 
-# Set up queue management
-require 'sidekiq'
-require 'redis'
-
-Dir[APP_ROOT.join('app', 'workers', '*.rb')].each { |file| require file }

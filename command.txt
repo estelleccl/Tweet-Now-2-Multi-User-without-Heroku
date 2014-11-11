@@ -1,0 +1,3 @@
+bundle exec sidekiq -r./config/environment.rb
+redis-server
+bundle exec shotgun config.ru
