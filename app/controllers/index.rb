@@ -10,7 +10,8 @@ post '/tweet' do
   halt(401,'Not Authorized') unless admin?
   @user = TwitterUser.find_by(twitter_username: session[:username])
   job_id = @user.post_tweet!(params[:tweet_msg])
-  redirect "/status/#{job_id}"
+  
+  # redirect "/status/#{job_id}"
 end
 
 get '/tweet' do
@@ -24,7 +25,7 @@ post '/tweet_later' do
   halt(401,'Not Authorized') unless admin?
   @user = TwitterUser.find_by(twitter_username: session[:username])
   job_id = @user.post_tweet_later!(params[:tweet_msg1], params[:time])
-  redirect "/status/#{job_id}"
+  # redirect "/status/#{job_id}"
 end
  
 get '/public' do
