@@ -48,6 +48,7 @@
                 setTimeout(function(){ check_job_status(result) }, 1000);
                 populate_tweets();
                 $("#wait-msg").hide();
+                document.getElementById("post_tweet").reset();
               },
               error: function(jqXHR, textStatus, errorThrown)
               {
@@ -90,6 +91,7 @@
                 setTimeout(function(){ check_job_status(result) }, 1000);
                 populate_tweets();
                 $('#status').hide();
+                document.getElementById("post_tweet_later").reset();
               },
               error: function(jqXHR, textStatus, errorThrown)
               {
